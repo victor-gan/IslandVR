@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Slot : MonoBehaviour
 {
     public GameObject ItemInSlot;
     public Image slotImage;
     Color originalColour;
-    
+    public InputActionReference activateReference = null;
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +19,15 @@ public class Slot : MonoBehaviour
         originalColour = slotImage.color;
     }
 
+    // OnTriggerStay is called constantly when another gameobject's collider is colliding with this script's gameobject
     private void OnTriggerStay(Collider other)
     {
         if (ItemInSlot != null) return;
-        GameObject obj = other.gameObject;
-        if (!IsItem(obj)) return;
-        InsertItem(obj);
+        if (!IsItem(other.gameObject)) return;
+        if(activateReference.action.triggered)
+        {
+            InsertItem(other.gameObject);
+        }
     }
 
     bool IsItem(GameObject obj)
@@ -50,6 +55,6 @@ public class Slot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
