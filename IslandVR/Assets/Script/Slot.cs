@@ -10,6 +10,8 @@ public class Slot : MonoBehaviour
     public Image slotImage;
     Color originalColour;
     public InputActionReference activateReference = null;
+    private bool removeItemFlag = false; //turns true when gameobject is removed from inventory, but grip is still held
+    private GameObject removeItemGameObject = null; //stores the gameobject that has been removed but is still held
 
 
     // Start is called before the first frame update
@@ -24,9 +26,22 @@ public class Slot : MonoBehaviour
     {
         if (ItemInSlot != null) return;
         if (!IsItem(other.gameObject)) return;
-        if(activateReference.action.triggered)
+        if(activateReference.action.ReadValue<float>() == (float) 0)
         {
             InsertItem(other.gameObject);
+        }
+    }
+
+    // Called when a gameobject stored in the inventory is taken out
+    private void OnTriggerExit(Collider other)
+    {
+        if(!GameObject.ReferenceEquals(ItemInSlot, other.gameObject)) return;
+        if(activateReference.action.ReadValue<float>() != (float) 0)
+        {
+            // A flag is switched on which will cause RemoveItem to be called in update() when the grip is released. This is done because if RemoveItem is 
+            // called here, when the grip is released, the gameobject will remain a child of this slot, causing glitches.
+            removeItemFlag = true;
+            removeItemGameObject = other.gameObject;
         }
     }
 
@@ -47,6 +62,16 @@ public class Slot : MonoBehaviour
         slotImage.color = Color.gray;
     }
 
+    void RemoveItem(GameObject obj)
+    {
+        obj.GetComponent<Rigidbody>().isKinematic = false;
+        obj.transform.parent = null;
+        obj.GetComponent<Item>().inSlot = false;
+        obj.GetComponent<Item>().currentSlot = null;
+        ItemInSlot = null;
+        ResetColor();
+    }
+
     public void ResetColor()
     {
         slotImage.color = originalColour;
@@ -55,6 +80,14 @@ public class Slot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(removeItemFlag)
+        {
+            if(activateReference.action.ReadValue<float>() == (float) 0)
+            {
+                RemoveItem(removeItemGameObject);
+                removeItemFlag = false;
+                removeItemGameObject = null;
+            }
+        }
     }
 }

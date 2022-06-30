@@ -1100,13 +1100,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Right Activate",
-                    "type": "Button",
-                    "id": "e6d0ac47-1d4a-4ee8-ad64-21039dcc2476",
-                    "expectedControlType": "Button",
+                    "name": "Right Grip",
+                    "type": "Value",
+                    "id": "689ead9d-2cf0-4c96-9419-c5fe7b56fd47",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1123,12 +1123,12 @@
                 },
                 {
                     "name": "",
-                    "id": "19c0d8c9-047b-4cf1-8cca-baf3a48d8f57",
-                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "id": "4a75cc84-ffb4-4ee6-b053-986e586af359",
+                    "path": "<OculusTouchController>{RightHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Right Activate",
+                    "action": "Right Grip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
