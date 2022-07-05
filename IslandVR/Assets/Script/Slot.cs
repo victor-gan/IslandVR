@@ -10,8 +10,8 @@ public class Slot : MonoBehaviour
     public Image slotImage;
     Color originalColour;
     public InputActionReference activateReference = null;
-    private bool removeItemFlag = false; //turns true when gameobject is removed from inventory, but grip is still held
-    private GameObject removeItemGameObject = null; //stores the gameobject that has been removed but is still held
+    public bool isKinematicFlag = false;
+    public GameObject isKinematicGameObject = null;
 
 
     // Start is called before the first frame update
@@ -38,10 +38,10 @@ public class Slot : MonoBehaviour
         if(!GameObject.ReferenceEquals(ItemInSlot, other.gameObject)) return;
         if(activateReference.action.ReadValue<float>() != (float) 0)
         {
-            // A flag is switched on which will cause RemoveItem to be called in update() when the grip is released. This is done because if RemoveItem is 
-            // called here, when the grip is released, the gameobject will remain a child of this slot, causing glitches.
-            removeItemFlag = true;
-            removeItemGameObject = other.gameObject;
+            isKinematicFlag = true;
+            isKinematicGameObject = other.gameObject;
+            RemoveItem(other.gameObject);
+            Debug.Log(isKinematicFlag);
         }
     }
 
@@ -64,7 +64,7 @@ public class Slot : MonoBehaviour
 
     void RemoveItem(GameObject obj)
     {
-        obj.GetComponent<Rigidbody>().isKinematic = false;
+        //obj.GetComponent<Rigidbody>().isKinematic = false;
         obj.transform.parent = null;
         obj.GetComponent<Item>().inSlot = false;
         obj.GetComponent<Item>().currentSlot = null;
@@ -80,13 +80,15 @@ public class Slot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(removeItemFlag)
+        if(isKinematicFlag)
         {
+            Debug.Log("passed flag check");
             if(activateReference.action.ReadValue<float>() == (float) 0)
             {
-                RemoveItem(removeItemGameObject);
-                removeItemFlag = false;
-                removeItemGameObject = null;
+                isKinematicGameObject.GetComponent<Rigidbody>().isKinematic = false;
+                isKinematicFlag = false;
+                isKinematicGameObject = null;
+                Debug.Log("kine");
             }
         }
     }
