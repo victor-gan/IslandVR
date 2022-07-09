@@ -68,7 +68,9 @@ public class TreeSplit : MonoBehaviour
                 Coconut.transform.parent = null;
             }
         }
-        catch (NullReferenceException n){}
+        catch (NullReferenceException n){
+            NullReferenceException error = n;
+        }
     }
 
     //take a wild guess 
