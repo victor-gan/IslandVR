@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Attributes : MonoBehaviour
 {
-    public int healthPoints = 100;
+    public float healthPoints = 100;
+    public float speed,strength,stamina;
+    public float water,minerals,vitamins,carbohydrates,proteins,fats = 100;
 
+    public float timer = 0;
+    public float decayTime = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +19,19 @@ public class Attributes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log("player alive");
+        timer += Time.deltaTime;
+
+        if(timer > decayTime)
+        {
+            //Debug.Log("reached timer");
+            timer -= decayTime;
+            water -= 1;
+            minerals -= 1;
+            vitamins -= 1;
+            carbohydrates -= 1;
+            proteins -= 1;
+            fats -= 1;
+        }
     }
 }
