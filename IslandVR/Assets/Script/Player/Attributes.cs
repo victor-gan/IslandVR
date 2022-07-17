@@ -6,7 +6,7 @@ public class Attributes : MonoBehaviour
 {
     public float healthPoints = 100;
     public float speed,strength,stamina;
-    public float water,minerals,vitamins,carbohydrates,proteins,fats = 100;
+    public float water = 100,minerals = 100,vitamins = 100,carbohydrates = 100,proteins = 100,fats = 100;
 
     public float timer = 0;
     public float decayTime = 1;

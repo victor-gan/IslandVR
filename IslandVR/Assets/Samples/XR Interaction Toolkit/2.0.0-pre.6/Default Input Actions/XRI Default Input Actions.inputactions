@@ -1133,6 +1133,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Consumable",
+            "id": "3e113054-32b2-456f-a00c-44846e0856f8",
+            "actions": [
+                {
+                    "name": "eatButton",
+                    "type": "Button",
+                    "id": "d4dc39cd-ee61-424c-a5e3-33bca258ec6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1d3d7c62-8e32-4dc8-a693-900e3b71ea2a",
+                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "eatButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
