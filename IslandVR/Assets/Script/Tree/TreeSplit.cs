@@ -27,6 +27,7 @@ public class TreeSplit : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         this.GetComponent<CapsuleCollider>().radius = Math.Max(this.GetComponent<CapsuleCollider>().radius - (float) 0.04, (float) 0.05);
+        Debug.Log("tree hit.");
         if(r.Next(5) == 1)
         {
             CoconutDrop();
@@ -64,7 +65,13 @@ public class TreeSplit : MonoBehaviour
             GameObject Coconut = GetComponentInChildren<Item>().gameObject;
             if(Coconut != null)
             {
-                Coconut.AddComponent<Rigidbody>();
+                if(Coconut.GetComponent<Rigidbody>() == null)
+                {
+                    Coconut.AddComponent<Rigidbody>();
+                }
+
+                Coconut.GetComponent<Rigidbody>().useGravity = true;
+                
                 Coconut.transform.parent = null;
             }
         }
